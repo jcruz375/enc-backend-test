@@ -3,6 +3,8 @@ set -e
 
 cd /var/www/html
 
+composer install --no-interaction --optimize-autoloader
+
 # 🔹 Garantir permissões em diretórios de escrita
 chown -R www-data:www-data storage bootstrap/cache
 
