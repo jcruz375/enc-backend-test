@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\DTOs\ProductImportDTO;
 
 class FakeStoreService
 {
@@ -14,7 +15,9 @@ class FakeStoreService
         try {
             $response = Http::get("{$this->baseUrl}/products");
 
-            return $response->successful() ? $response->json() : [];
+            return $response->successful()
+                ? array_map(fn (array $item) => ProductImportDTO::fromApi($item), $response->json())
+                : [];
         } catch (\Exception $e) {
             Log::error("Erro ao buscar produtos na FakeStoreAPI: " . $e->getMessage());
             return [];

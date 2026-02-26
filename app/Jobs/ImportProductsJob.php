@@ -20,15 +20,15 @@ class ImportProductsJob implements ShouldQueue
 
         foreach ($products as $item) {
             Product::updateOrCreate(
-                ['external_id' => (string) $item['id']],
+                ['external_id' => $item->externalId],
                 [
-                    'title'        => $item['title'],
-                    'price'        => $item['price'],
-                    'description'  => $item['description'],
-                    'category'     => $item['category'],
-                    'image'        => $item['image'],
-                    'rating_rate'  => $item['rating']['rate'] ?? 0,
-                    'rating_count' => $item['rating']['count'] ?? 0,
+                    'title'        => $item->title,
+                    'price'        => $item->price,
+                    'description'  => $item->description,
+                    'category'     => $item->category,
+                    'image'        => $item->image,
+                    'rating_rate'  => $item->ratingRate,
+                    'rating_count' => $item->ratingCount,
                 ]
             );
         }
