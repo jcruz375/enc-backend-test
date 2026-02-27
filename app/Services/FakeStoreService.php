@@ -13,7 +13,7 @@ class FakeStoreService
     public function getProducts(): array
     {
         try {
-            $response = Http::get("{$this->baseUrl}/products");
+            $response = Http::retry(3, 100)->get("{$this->baseUrl}/products");
 
             return $response->successful()
                 ? array_map(fn (array $item) => ProductImportDTO::fromApi($item), $response->json())
