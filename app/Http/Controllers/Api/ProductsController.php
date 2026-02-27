@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ProductsController extends Controller
 {
@@ -74,5 +75,20 @@ class ProductsController extends Controller
         }
 
         return new ProductResource($product);
+    }
+
+    public function destroy(string $id): JsonResponse
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product->rating_rate > 4.5) {
+            return response()->json([
+                'message' => 'Não é permitido excluir produtos com avaliação superior a 4.5'
+            ], 422);
+        }
+
+        $product->delete();
+
+        return response()->json(null, 204);
     }
 }
