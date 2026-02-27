@@ -47,6 +47,19 @@ class ProductsController extends Controller
         return ProductResource::collection($query->paginate(10));
     }
 
+    public function stats(): JsonResponse
+    {
+        return response()->json([
+            'total_products'   => Product::count(),
+            'average_price'    => round((float) Product::avg('price'), 2),
+            'highest_price'    => (float) Product::max('price'),
+            'lowest_price'     => (float) Product::min('price'),
+            'categories_count' => Product::groupBy('category')
+                ->selectRaw('category, count(*) as count')
+                ->pluck('count', 'category'),
+        ]);
+    }
+
     public function show(string $id): ProductResource
     {
         $product = Product::findOrFail($id);
