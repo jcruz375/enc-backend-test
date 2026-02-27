@@ -1,5 +1,7 @@
 # ENC Backend Test - Product Importer
 
+> **Nota:** Este projeto utilizou IA para documentação, auxílio em métodos de consulta ao banco e padronização em DTOs.
+
 Este projeto é uma aplicação Laravel containerizada focada na importação e sincronização de produtos de uma API externa (FakeStoreAPI).
 
 ## 🚀 Tecnologias Utilizadas
@@ -68,3 +70,61 @@ docker-compose exec app php artisan products:import
 - **Command (`ImportProductsCommand`)**: Interface de linha de comando para facilitar o disparo do Job.
 
 > **Nota sobre Filas:** Se a variável `QUEUE_CONNECTION` no `.env` estiver definida como `sync`, a importação ocorrerá imediatamente. Se estiver como `database` ou `redis`, será necessário rodar o worker: `docker-compose exec app php artisan queue:work`.
+
+---
+
+## 📖 Documentação da API
+
+A aplicação expõe os seguintes endpoints RESTful (prefixo `/api`):
+
+### 1. Listagem de Produtos
+
+Retorna uma lista paginada de produtos.
+
+**GET** `/api/products`
+
+| Parâmetro | Descrição | Exemplo |
+|-----------|-----------|---------|
+| `page` | Número da página | `1` |
+| `search` | Busca parcial no título | `shirt` |
+| `category` | Filtro exato de categoria | `men's clothing` |
+| `price_min` | Preço mínimo | `10` |
+| `price_max` | Preço máximo | `100` |
+| `rating_min` | Avaliação mínima (0-5) | `4` |
+| `sort_by` | Ordenação (`price`, `title`, `rating_rate`) | `price` |
+| `order` | Direção (`asc`, `desc`) | `desc` |
+
+```bash
+curl -X GET "http://localhost:8080/api/products?category=electronics&sort_by=price&order=desc"
+```
+
+### 2. Estatísticas
+
+Retorna métricas consolidadas do catálogo (total, média de preço, contagem por categoria, etc).
+
+**GET** `/api/products/stats`
+
+### 3. Detalhes do Produto
+
+Exibe dados de um produto específico, incluindo preço com taxa calculada.
+
+**GET** `/api/products/{id}`
+
+### 4. Atualização Parcial
+
+Atualiza título, preço ou categoria. Gera log de alterações interno.
+
+**PATCH** `/api/products/{id}`
+
+```json
+{
+  "price": 29.99,
+  "title": "Novo Título"
+}
+```
+
+### 5. Exclusão (Soft Delete)
+
+Remove um produto. **Nota:** Produtos com avaliação superior a 4.5 não podem ser excluídos.
+
+**DELETE** `/api/products/{id}`
