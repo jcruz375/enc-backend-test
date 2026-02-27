@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductsController extends Controller
 {
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(ProductRequest $request): AnonymousResourceCollection
     {
         $query = Product::query();
 
@@ -47,7 +47,30 @@ class ProductsController extends Controller
 
     public function show(string $id): ProductResource
     {
-        $product = Product::where('id', $id)->firstOrFail();
+        $product = Product::findOrFail($id);
+
+        return new ProductResource($product);
+    }
+
+    public function update(ProductRequest $request, string $id): ProductResource
+    {
+        $product = Product::findOrFail($id);
+        $validated = $request->validated();
+
+        $changes = [];
+        foreach ($validated as $key => $value) {
+            if ($product->$key != $value) {
+                $changes[$key] = ['old' => $product->$key, 'new' => $value];
+                $product->$key = $value;
+            }
+        }
+
+        if (!empty($changes)) {
+            $log = $product->update_log ?? [];
+            $log[] = ['timestamp' => now()->toIso8601String(), 'changes' => $changes];
+            $product->update_log = $log;
+            $product->save();
+        }
 
         return new ProductResource($product);
     }
