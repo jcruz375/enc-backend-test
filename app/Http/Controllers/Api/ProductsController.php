@@ -7,10 +7,11 @@ use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
-    public function index(ProductRequest $request): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
         $query = Product::query();
 
