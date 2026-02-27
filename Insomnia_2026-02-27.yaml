@@ -1,0 +1,216 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: My first collection
+meta:
+  id: wrk_9ddc3f07ccb448d0a8de8ec0b782e365
+  created: 1772043962761
+  modified: 1772043962761
+  description: ""
+collection:
+  - url: "{{ _.baseUrl }}/health"
+    name: api_health
+    meta:
+      id: req_74f29074d493453fb082a289a9d7cd31
+      created: 1772043962803
+      modified: 1772208987311
+      isPrivate: false
+      description: ""
+      sortKey: -1772043962803
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.baseUrl }}/products"
+    name: products_list
+    meta:
+      id: req_f480286abbf94313a2fc39a1d3a67db3
+      created: 1772208991485
+      modified: 1772222480992
+      isPrivate: false
+      description: ""
+      sortKey: -1772208991485
+    method: GET
+    parameters:
+      - name: search
+        value: mens
+        description: ""
+        disabled: true
+      - name: category
+        value: jewelery
+        description: ""
+        disabled: true
+      - name: price_min
+        value: "160"
+        description: ""
+        disabled: true
+      - name: price_max
+        value: "169"
+        description: ""
+        disabled: true
+      - name: rating_min
+        value: "4.8"
+        description: ""
+        disabled: true
+      - name: sort_by
+        value: price
+        description: ""
+        disabled: true
+      - name: order
+        value: desc
+        description: ""
+        disabled: true
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.baseUrl }}/products/2"
+    name: product_detail
+    meta:
+      id: req_de34266ea02144a489db6863e1eb1476
+      created: 1772210539775
+      modified: 1772219929774
+      isPrivate: false
+      description: ""
+      sortKey: -1772210539775
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.baseUrl }}/products/2"
+    name: update_product
+    meta:
+      id: req_48d6a50f46cb442d8111bf43f7a40c88
+      created: 1772219888985
+      modified: 1772220962430
+      isPrivate: false
+      description: ""
+      sortKey: -1772219888985
+    method: PATCH
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: title
+          value: mer
+          description: ""
+          disabled: false
+        - name: price
+          value: "10.50"
+          description: ""
+          disabled: true
+        - name: category
+          value: teste
+          description: ""
+          disabled: true
+        - name: description
+          value: testando validação
+          description: ""
+          disabled: false
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.baseUrl }}/products/1"
+    name: delete_product
+    meta:
+      id: req_8e24a7a8189a49c59af44828ba3d9e18
+      created: 1772222423046
+      modified: 1772222613949
+      isPrivate: false
+      description: ""
+      sortKey: -1772215214380
+    method: DELETE
+    body:
+      mimeType: multipart/form-data
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.baseUrl }}/products/stats"
+    name: stats
+    meta:
+      id: req_3d6e335d96a84cffb187e2e5ad56792b
+      created: 1772223357579
+      modified: 1772223407995
+      isPrivate: false
+      description: ""
+      sortKey: -1772223357579
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_06fe57a5f9d8484e6bc62f8bdeffe648db779cbb
+    created: 1772043962763
+    modified: 1772043962763
+environments:
+  name: Base Environment
+  meta:
+    id: env_06fe57a5f9d8484e6bc62f8bdeffe648db779cbb
+    created: 1772043962762
+    modified: 1772044309588
+    isPrivate: false
+  data:
+    baseUrl: http://localhost:8080/api

@@ -2,6 +2,8 @@
 
 > **Nota:** Este projeto utilizou IA para documentação, auxílio em métodos de consulta ao banco e padronização em DTOs.
 
+> **Insomnia:** Há um arquivo de exportação na raiz do projeto. Basta importá-lo no Insomnia para ter acesso aos testes de requisição à API. `Insomnia_2026-02-27.yaml`
+
 Este projeto é uma aplicação Laravel containerizada focada na importação e sincronização de produtos de uma API externa (FakeStoreAPI).
 
 ## 🚀 Tecnologias Utilizadas
